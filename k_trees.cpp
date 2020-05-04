@@ -13,14 +13,37 @@ using namespace std;
 #define vin vector<int>
 #define w(t) int tc; cin >> tc; for(int t = 1; t <= tc; t++)
 #define vec vector
-#define mk_arr(n, t, s) t* n = new t[s]; loop(s) cin >> n[i]; 
-#define mi_arr(n, s) int* n = new int[s]; loop(s) cin >> n[i]; 
-#define arr_out(n, s) Loop(0, s, lout) cout << n[lout] << " ";
-#define pi(x) printf("%lld ", x);
+#define mod 1000000007
+#define all(x) x.begin(), x.end()
+
+long long dp[105];
+
+int find(int n, int k){
+    if(k == 0) return 0;
+    if(n < 0) return 0;
+    if(n == 0) return 1;
+    if(dp[n] == -1){
+        long long ans = 0;
+        Loop(1, k+1, i){
+            ans = (ans%mod + find(n-i, k)%mod)%mod;
+        }
+        dp[n] = ans%mod;
+    }
+    return dp[n]%mod;
+}
 
 int32_t main(){
-    fastio;
-    w(t){
-        
-    }
+    long long n, k, d;
+    scanf("%lld", &n);
+    scanf("%lld", &k);
+    scanf("%lld", &d);
+    memset(dp, -1, sizeof(dp));
+    int ans = find(n, k);
+    memset(dp, -1, sizeof(dp));
+    int ans1 = find(n, d-1);
+    // deb(ans);
+    // deb(ans1);
+    ans = (ans - ans1 + mod)%mod;
+    
+    cout << ans << endl;
 }
